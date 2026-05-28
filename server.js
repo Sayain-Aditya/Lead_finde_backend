@@ -14,7 +14,7 @@ connectDB();
 // Middleware
 app.use(cors({
   origin: [
-    "https://lead-finder-frontend-seven.vercel.app",
+    "https://lead-finder-frontend-one.vercel.app",
     "http://localhost:5173",
     "http://localhost:3000",
     /\.vercel\.app$/,
