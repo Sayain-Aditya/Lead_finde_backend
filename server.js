@@ -12,7 +12,10 @@ const app = express();
 connectDB();
 
 // Middleware
-app.use(cors({ origin: "*", methods: ["GET", "POST", "PUT", "DELETE"] }));
+app.use(cors({
+  origin: ["https://lead-finder-frontend-seven.vercel.app", "http://localhost:5173"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+}));
 app.use(express.json());
 
 // Routes
