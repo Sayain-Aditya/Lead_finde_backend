@@ -7,7 +7,6 @@ const mapsRouter  = require("./routes/maps");
 const pitchRouter = require("./routes/pitch");
 
 const app = express();
-const PORT = process.env.PORT || 3001;
 
 // Connect to MongoDB
 connectDB();
@@ -24,6 +23,10 @@ app.use("/", mapsRouter);
 // Health check
 app.get("/health", (req, res) => res.json({ status: "ok" }));
 
-app.listen(PORT, () => {
-  console.log(`✅ Backend running at http://localhost:${PORT}`);
-});
+// Local dev
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 3001;
+  app.listen(PORT, () => console.log(`✅ Backend running at http://localhost:${PORT}`));
+}
+
+module.exports = app;
