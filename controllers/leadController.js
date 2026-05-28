@@ -10,6 +10,10 @@ const getAllLeads = async (req, res) => {
   }
 };
 
+// helper — normalise city to Title Case
+const titleCase = (str) =>
+  (str || "").trim().replace(/\b\w/g, (c) => c.toUpperCase());
+
 // POST /leads — save batch, skip duplicates by name+city
 const createLeads = async (req, res) => {
   try {
@@ -21,7 +25,11 @@ const createLeads = async (req, res) => {
     const skippedNames = [];
 
     for (const l of leads) {
-      const exists = await Lead.findOne({ name: l.name, city: l.city });
+      l.city = titleCase(l.city);
+      const exists = await Lead.findOne({
+        name: l.name,
+        city: { $regex: new RegExp(`^${l.city}$`, "i") },
+      });
       if (!exists) {
         const doc = await Lead.create(l);
         saved.push(doc);
